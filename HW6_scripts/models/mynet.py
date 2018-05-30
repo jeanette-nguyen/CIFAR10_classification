@@ -17,7 +17,7 @@ class MyNet(nn.Module):
         self.conv3 = nn.Conv2d(out2,out3,kernel_size,stride,padding=1) #16x16 input
         self.conv4 = nn.Conv2d(out3,out4,kernel_size,stride,padding=1) #16x16 input
         self.conv5 = nn.Conv2d(out4,out5,kernel_size,stride,padding=1) #8x8 input
-        self.conv5 = nn.Conv2d(out5,out6,kernel_size,stride,padding=1) #8x8 input
+        self.conv6 = nn.Conv2d(out5,out6,kernel_size,stride,padding=1) #8x8 input
         self.fc1 = nn.Linear(4*4*512,100) #4x4 input
         self.fc2 = nn.Linear(100,num_classes) #4x4 input
         self.relu = nn.ReLU(inplace=True)
