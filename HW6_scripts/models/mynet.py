@@ -39,5 +39,5 @@ class MyNet(nn.Module):
         return x
 
 def mynet(inplanes, num_classes):
-    model = MyNet(num_classes)
+    model = MyNet()
     return model
