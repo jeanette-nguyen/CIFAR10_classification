@@ -19,9 +19,9 @@ def cifar10(batch_size, data_root='./cifar10', train=True, val=True, **kwargs):
             datasets.CIFAR10(
                 root=data_root, train=True, download=True,
                 transform=transforms.Compose([
-                    transforms.Pad(4),
-                    transforms.RandomCrop(32),
-                    transforms.RandomHorizontalFlip(),
+                    #transforms.Pad(4),
+                    #transforms.RandomCrop(32),
+                    #transforms.RandomHorizontalFlip(),
                     transforms.ToTensor(),
                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                 ])),
