@@ -4,7 +4,7 @@ import math
 class MyNet(nn.Module):
 
     def __init__(self, inplanes=3, num_classes=10, kernel_size=3, stride=1,padding=1):
-        super().__init()
+        super().__init__()
         out1=8
         out2=8
         out3=16
