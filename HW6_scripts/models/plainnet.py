@@ -24,11 +24,11 @@ class BasicBlock(nn.Module):
 
     def forward(self, x):
         out = self.conv1(x)
-        out = self.bn1(out)
+        #out = self.bn1(out)
         out = self.relu(out)
 
         out = self.conv2(out)
-        out = self.bn2(out)
+        #out = self.bn2(out)
         out = self.relu(out)
 
         return out
@@ -68,7 +68,7 @@ class PlainNet(nn.Module):
 
     def forward(self, x):
         x = self.conv1(x)
-        x = self.bn1(x)
+        #x = self.bn1(x)
         x1 = self.relu(x)
 
         x3 = self.layer1(x1)
