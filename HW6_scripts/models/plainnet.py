@@ -69,17 +69,18 @@ class PlainNet(nn.Module):
     def forward(self, x):
         x = self.conv1(x)
         x = self.bn1(x)
-        x = self.relu(x)
+        x1 = self.relu(x)
 
-        x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.layer3(x)
+        x3 = self.layer1(x1)
+        x5 = self.layer2(x3)
+        x7 = self.layer3(x5)
 
-        x = self.avgpool(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc(x)
+        x7 = self.avgpool(x7)
+        x7 = x7.view(x7.size(0), -1)
+        x8 = self.fc(x7)
 
-        return x
+        return x8
+        #return x1, x3, x5, x7, x8
 
 
 def plainnet20(inplanes, num_classes):

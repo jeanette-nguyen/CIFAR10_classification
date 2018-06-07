@@ -111,6 +111,7 @@ def main():
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch)
 
+
         # evaluate on validation set
         prec1 = validate(val_loader, model, criterion)
 
@@ -124,6 +125,50 @@ def main():
             'best_prec1': best_prec1,
             'optimizer': optimizer.state_dict(),
         }, is_best)
+
+    #prec1 = validate_one_batch(val_loader,model,criterion)
+
+
+def validate_one_batch(val_loader, model, criterion):
+    batch_time = AverageMeter()
+    losses = AverageMeter()
+    top1 = AverageMeter()
+
+    # switch to evaluate mode
+    model.eval()
+
+    end = time.time()
+    for i, (input, target) in enumerate(val_loader):
+        target = target.cuda(async=True)
+        input_var = torch.autograd.Variable(input, volatile=True)
+        target_var = torch.autograd.Variable(target, volatile=True)
+
+        # compute output
+        output = model(input_var)
+        loss = criterion(output, target_var)
+
+        # measure accuracy and record loss
+        prec1 = accuracy(output.data, target)
+        losses.update(loss.data[0], input.size(0))
+        top1.update(prec1[0][0], input.size(0))
+
+        # measure elapsed time
+        batch_time.update(time.time() - end)
+        end = time.time()
+
+        if i % args.print_freq == 0:
+            print('Test: [{0}/{1}]\t'
+                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})'.format(
+                   i, len(val_loader), batch_time=batch_time, loss=losses,
+                   top1=top1))
+
+    print(' * Testing Prec@1 {top1.avg:.3f}'.format(top1=top1))
+
+    return top1.avg
+
+
 
 
 def train(train_loader, model, criterion, optimizer, epoch):

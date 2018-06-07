@@ -37,6 +37,7 @@ def cifar10(batch_size, data_root='./cifar10', train=True, val=True, **kwargs):
                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                 ])),
             batch_size=batch_size, shuffle=False, **kwargs)
+            #batch_size=10, shuffle=False, **kwargs)
         print("CIFAR-10 testing data size: {}".format(len(test_loader.dataset.test_data)))
         ds.append(test_loader)
     ds = ds[0] if len(ds) == 1 else ds
