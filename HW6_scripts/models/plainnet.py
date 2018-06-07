@@ -90,3 +90,7 @@ def plainnet20(inplanes, num_classes):
 def plainnet56(inplanes, num_classes):
     model = PlainNet(BasicBlock, [9, 9, 9], inplanes, num_classes)
     return model
+
+def plainnet8(inplanes, num_classes):
+    model = PlainNet(BasicBlock, [1,1,1], inplanes, num_classes)
+    return model
