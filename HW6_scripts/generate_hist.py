@@ -32,10 +32,11 @@ def PlotCharacterics(type, data):
     plt.ylabel(type)
     plt.title("Running "+type)
     plt.plot([1,3,5,7], data)
+    plt.savefig(fname)
 
 def GetHistogram(output, label, norm):
 
-    fname = '3a_hist_layer'+layer+norm+'.png'
+    fname = '3a_hist_layer'+label+norm+'.png'
     plt.figure()
     plt.xlabel("")
     plt.ylabel("Count")
