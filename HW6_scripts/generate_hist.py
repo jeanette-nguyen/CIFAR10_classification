@@ -27,7 +27,7 @@ def main():
     GetHistogram((in_bn1-mean[0])/var[0], '1st', '_norm')
     GetHistogram((in_bn3-mean[1])/var[1], '2nd', '_norm')
     GetHistogram((in_bn5-mean[2])/var[2], '3rd', '_norm')
-    GetHistogram((in_bn6-mean[3])/var[3], '7th', '_norm')  
+    GetHistogram((in_bn7-mean[3])/var[3], '7th', '_norm')  
 
 def PlotCharacterics(type, data):
     fname = '3a'+type+'.png'
