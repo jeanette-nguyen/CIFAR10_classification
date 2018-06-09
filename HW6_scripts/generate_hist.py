@@ -31,12 +31,12 @@ def main():
 
 def PlotCharacterics(type, data):
     fname = '3a'+type+'.png'
-    ax1 = plt.figure()
-    ax1.xlabel("Layer")
-    ax1.ylabel(type)
-    ax1.title("Running "+type)
-    ax1.plot([1,3,5,7], data)
-    ax1.savefig(fname)
+    plt.figure()
+    plt.xlabel("Layer")
+    plt.ylabel(type)
+    plt.title("Running "+type)
+    plt.plot([1,3,5,7], data)
+    plt.savefig(fname)
 
 def GetHistogram(output, label, norm):
 
