@@ -12,6 +12,7 @@ import torch.utils.data
 
 import datasets
 import models as models
+import pickle
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -111,7 +112,7 @@ def main():
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch)
 
-
+        '''
         # evaluate on validation set
         prec1 = validate(val_loader, model, criterion)
 
@@ -125,8 +126,9 @@ def main():
             'best_prec1': best_prec1,
             'optimizer': optimizer.state_dict(),
         }, is_best)
+        '''
 
-    #prec1 = validate_one_batch(val_loader,model,criterion)
+    prec1 = validate_one_batch(val_loader,model,criterion)
 
 
 def validate_one_batch(val_loader, model, criterion):
@@ -139,12 +141,14 @@ def validate_one_batch(val_loader, model, criterion):
 
     end = time.time()
     for i, (input, target) in enumerate(val_loader):
+        if i >= 1:
+            break;
         target = target.cuda(async=True)
         input_var = torch.autograd.Variable(input, volatile=True)
         target_var = torch.autograd.Variable(target, volatile=True)
 
         # compute output
-        output = model(input_var)
+        output, in_bn1, in_bn3, in_bn5, in_bn7 = model(input_var)
         loss = criterion(output, target_var)
 
         # measure accuracy and record loss
@@ -165,6 +169,11 @@ def validate_one_batch(val_loader, model, criterion):
                    top1=top1))
 
     print(' * Testing Prec@1 {top1.avg:.3f}'.format(top1=top1))
+
+    #dump to pickle file
+    outputs = {'layer1':in_bn1, 'layer3':in_bn3, 'layer5':in_bn5, 'layer7':in_bn7}
+    with open("3a_layer_outputs.pkl", "wb") as f:
+        pickle.dump(outputs, f)
 
     return top1.avg
 
@@ -190,7 +199,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
         target_var = torch.autograd.Variable(target)
 
         # compute output
-        output = model(input_var)
+        output, in_bn1, in_bn3, in_bn5, in_bn7 = model(input_var)
         loss = criterion(output, target_var)
 
         # measure accuracy and record loss

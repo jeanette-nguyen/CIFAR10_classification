@@ -23,15 +23,15 @@ class BasicBlock(nn.Module):
         self.stride = stride
 
     def forward(self, x):
-        out = self.conv1(x)
-        #out = self.bn1(out)
+        in_bn1 = self.conv1(x)
+        out = self.bn1(in_bn1)
         out = self.relu(out)
 
-        out = self.conv2(out)
-        #out = self.bn2(out)
+        in_bn2 = self.conv2(out)
+        out = self.bn2(in_bn2)
         out = self.relu(out)
 
-        return out
+        return out, in_bn1, in_bn2
 
 
 class PlainNet(nn.Module):
@@ -67,20 +67,20 @@ class PlainNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        x = self.conv1(x)
-        #x = self.bn1(x)
-        x1 = self.relu(x)
+        in_bn1 = self.conv1(x)
+        x = self.bn1(in_bn1)
+        x = self.relu(x)
 
-        x3 = self.layer1(x1)
-        x5 = self.layer2(x3)
-        x7 = self.layer3(x5)
+        x, in_bn2, in_bn3 = self.layer1(x)
+        x, in_bn4, in_bn5  = self.layer2(x)
+        x, in_bn6, in_bn7  = self.layer3(x)
 
-        x7 = self.avgpool(x7)
-        x7 = x7.view(x7.size(0), -1)
-        x8 = self.fc(x7)
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
 
-        return x8
-        #return x1, x3, x5, x7, x8
+        return x, in_bn1, in_bn3, in_bn5, in_bn7
+
 
 
 def plainnet20(inplanes, num_classes):
