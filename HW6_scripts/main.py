@@ -112,7 +112,6 @@ def main():
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch)
 
-        '''
         # evaluate on validation set
         prec1 = validate(val_loader, model, criterion)
 
@@ -126,9 +125,9 @@ def main():
             'best_prec1': best_prec1,
             'optimizer': optimizer.state_dict(),
         }, is_best)
-        '''
 
-    prec1 = validate_one_batch(val_loader,model,criterion)
+
+    #prec1 = validate_one_batch(val_loader,model,criterion)
 
 
 def validate_one_batch(val_loader, model, criterion):
